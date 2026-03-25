@@ -108,6 +108,27 @@ function syncStoredState() {
     }
 }
 
+function startStoredStateRefresh() {
+    syncStoredState();
+
+    window.addEventListener('pageshow', syncStoredState);
+    window.addEventListener('focus', syncStoredState);
+
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'visible') {
+            syncStoredState();
+        }
+    });
+
+    window.addEventListener('storage', function(event) {
+        if (!event.key || event.key === 'cart' || event.key === 'wishlist') {
+            syncStoredState();
+        }
+    });
+
+    window.setInterval(syncStoredState, 1000);
+}
+
 function addToCart(id, name, price, img, quantity = 1, options = null) {
     let cart = loadCart();
     let existingItem = cart.find(item => (item.key || item.id) === id);
@@ -415,7 +436,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    syncStoredState();
+    startStoredStateRefresh();
 
     let productsSection = document.querySelector('.products.luxury-grid');
     if (productsSection) {
