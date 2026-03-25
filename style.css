@@ -9,6 +9,30 @@
     color-scheme: light;
 }
 
+html,
+body {
+    background-color: #f7f3ef !important;
+    background-image: none !important;
+    color: #333 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    html,
+    body,
+    header,
+    section,
+    footer,
+    div,
+    span,
+    p,
+    a,
+    button {
+        background-color: #f7f3ef !important;
+        color: #333 !important;
+        border-color: #e0d7cf !important;
+    }
+}
+
 html {
     font-size: 62.5%;
     /* scroll-behavior: smooth;
