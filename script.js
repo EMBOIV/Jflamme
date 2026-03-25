@@ -221,6 +221,12 @@ function displayCart() {
     whatsappBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Send order';
     whatsappBtn.target = '_blank';
     whatsappBtn.rel = 'noopener noreferrer';
+    whatsappBtn.addEventListener('click', function() {
+        localStorage.removeItem('cart');
+        updateCartCount();
+        displayCart();
+        showToast('Order sent! Cart cleared.');
+    });
     cartContainer.appendChild(whatsappBtn);
 }
 
