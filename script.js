@@ -500,6 +500,13 @@ function renderCheckoutPage() {
     orderField.value = orderText;
 
     if (form) {
+        let phoneInput = document.getElementById('phone');
+        if (phoneInput) {
+            phoneInput.addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9+]/g, '');
+            });
+        }
+
         form.querySelectorAll('.checkout-field input[required]').forEach(function(input) {
             let star = input.closest('.checkout-field').querySelector('.required-star');
             if (!star) return;
