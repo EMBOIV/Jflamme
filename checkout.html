@@ -66,28 +66,28 @@
 
             <div class="checkout-row">
                 <div class="checkout-field">
-                    <label for="first_name">First Name</label>
+                    <label for="first_name">First Name <span class="required-star">*</span></label>
                     <input type="text" id="first_name" name="first_name" placeholder="First Name" required>
                 </div>
                 <div class="checkout-field">
-                    <label for="last_name">Last Name</label>
+                    <label for="last_name">Last Name <span class="required-star">*</span></label>
                     <input type="text" id="last_name" name="last_name" placeholder="Last Name" required>
                 </div>
             </div>
 
             <div class="checkout-field">
-                <label for="address">Address</label>
+                <label for="address">Address <span class="required-star">*</span></label>
                 <input type="text" id="address" name="address" placeholder="Full Address" required>
             </div>
 
             <div class="checkout-row">
                 <div class="checkout-field">
-                    <label for="city">City</label>
+                    <label for="city">City <span class="required-star">*</span></label>
                     <input type="text" id="city" name="city" placeholder="City" required>
                 </div>
                 <div class="checkout-field">
-                    <label for="phone">Phone</label>
-                    <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+                    <label for="phone">Phone <span class="required-star">*</span></label>
+                    <input type="tel" id="phone" name="phone" placeholder="Phone Number" required pattern="[0-9]+" inputmode="numeric">
                 </div>
             </div>
 

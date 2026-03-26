@@ -500,8 +500,22 @@ function renderCheckoutPage() {
     orderField.value = orderText;
 
     if (form) {
+        form.querySelectorAll('.checkout-field input[required]').forEach(function(input) {
+            let star = input.closest('.checkout-field').querySelector('.required-star');
+            if (!star) return;
+            function toggleStar() {
+                star.classList.toggle('hidden', input.value.trim() !== '');
+            }
+            toggleStar();
+            input.addEventListener('input', toggleStar);
+        });
+
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
             let formData = new FormData(form);
             fetch('/', {
                 method: 'POST',
