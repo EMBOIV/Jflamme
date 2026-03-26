@@ -211,7 +211,7 @@ function displayCart() {
     let checkoutBtn = document.createElement('a');
     checkoutBtn.href = 'checkout';
     checkoutBtn.className = 'btn checkout-btn';
-    checkoutBtn.innerHTML = '<i class="fas fa-lock"></i> Proceed to Checkout';
+    checkoutBtn.innerHTML = '<i class="fas fa-bag-shopping"></i> Proceed to Checkout';
     cartContainer.appendChild(checkoutBtn);
 }
 
