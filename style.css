@@ -5,8 +5,8 @@
     text-decoration: none;
 }
 
-:root {
-    color-scheme: light;
+*, *::before, *::after {
+    color-scheme: light !important;
 }
 
 html,
@@ -14,23 +14,6 @@ body {
     background-color: #f7f3ef !important;
     background-image: none !important;
     color: #333 !important;
-}
-
-@media (prefers-color-scheme: dark) {
-    html,
-    body,
-    header,
-    section,
-    footer,
-    div,
-    span,
-    p,
-    a,
-    button {
-        background-color: #f7f3ef !important;
-        color: #333 !important;
-        border-color: #e0d7cf !important;
-    }
 }
 
 html {
@@ -691,22 +674,27 @@ section {
 
 .toast {
     position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    padding: 1rem 1.5rem;
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    border-radius: 0.5rem;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(1rem);
+    padding: 1.2rem 2.4rem;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #2E2E2E;
+    border: 1px solid rgba(201, 164, 108, 0.25);
+    border-radius: 999px;
     font-size: 1.4rem;
+    font-weight: 500;
+    box-shadow: 0 8px 30px rgba(46, 46, 46, 0.12);
     opacity: 0;
-    transform: translateY(1rem);
     transition: opacity 0.3s ease, transform 0.3s ease;
     z-index: 2000;
 }
 
 .toast-show {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
 }
 
 /* floral boutique theme */
