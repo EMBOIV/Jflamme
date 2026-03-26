@@ -187,6 +187,7 @@ function displayCart() {
         let itemDiv = document.createElement('div');
         itemDiv.className = 'cart-item';
         itemDiv.innerHTML = `
+            <button class="cart-remove-btn" data-id="${item.key || item.id}" aria-label="Remove ${item.name} from cart">&times;</button>
             <img src="${item.img}" alt="${item.name}">
             <div class="item-details">
                 <h3>${item.name}</h3>
@@ -283,27 +284,67 @@ function renderProductConfigPage() {
                 ${pricingMarkup}
 
                 <div class="product-config-actions">
-                    <div class="config-qty-controls">
-                        <button id="config-qty-minus" class="config-qty-btn" type="button">-</button>
-                        <span id="config-qty-value" class="config-qty-value">1</span>
-                        <button id="config-qty-plus" class="config-qty-btn" type="button">+</button>
-                    </div>
-
-                    <button id="add-configured-product" class="btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                    <div id="dynamic-cart-wrapper" class="dynamic-cart-wrapper"></div>
                 </div>
             </div>
         </div>
     `;
 
-    let quantity = 1;
-    let qtyValue = document.getElementById('config-qty-value');
-    let minusButton = document.getElementById('config-qty-minus');
-    let plusButton = document.getElementById('config-qty-plus');
     let mainImage = document.getElementById('product-main-image');
+    let cartWrapper = document.getElementById('dynamic-cart-wrapper');
 
-    function renderQuantity() {
-        qtyValue.textContent = quantity;
+    function getCartQuantity() {
+        let cart = loadCart();
+        let item = cart.find(ci => ci.id === product.id || ci.key === product.id);
+        return item ? item.quantity : 0;
     }
+
+    function renderDynamicCartButton() {
+        let qty = getCartQuantity();
+        if (qty > 0) {
+            cartWrapper.innerHTML = `
+                <div class="dynamic-cart-qty">
+                    <button class="dynamic-cart-btn dynamic-cart-minus" type="button" aria-label="Decrease quantity">\u2212</button>
+                    <span class="dynamic-cart-count">${qty}</span>
+                    <button class="dynamic-cart-btn dynamic-cart-plus" type="button" aria-label="Increase quantity">+</button>
+                </div>
+            `;
+            cartWrapper.querySelector('.dynamic-cart-minus').addEventListener('click', function() {
+                let cart = loadCart();
+                let item = cart.find(ci => ci.id === product.id || ci.key === product.id);
+                if (item) {
+                    item.quantity -= 1;
+                    if (item.quantity <= 0) {
+                        cart = cart.filter(ci => (ci.key || ci.id) !== product.id);
+                    }
+                    saveCart(cart);
+                }
+                renderDynamicCartButton();
+            });
+            cartWrapper.querySelector('.dynamic-cart-plus').addEventListener('click', function() {
+                let cart = loadCart();
+                let item = cart.find(ci => ci.id === product.id || ci.key === product.id);
+                if (item) {
+                    item.quantity += 1;
+                    saveCart(cart);
+                }
+                renderDynamicCartButton();
+            });
+        } else {
+            cartWrapper.innerHTML = `
+                <button class="btn dynamic-add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+            `;
+            cartWrapper.querySelector('.dynamic-add-to-cart').addEventListener('click', function() {
+                addToCart(product.id, product.name, product.price, product.img, 1);
+                this.innerHTML = '<i class="fas fa-check"></i> Item Added to Cart';
+                this.disabled = true;
+                this.classList.add('added-feedback');
+                setTimeout(renderDynamicCartButton, 700);
+            });
+        }
+    }
+
+    renderDynamicCartButton();
 
     document.querySelectorAll('.product-thumb').forEach(button => {
         button.addEventListener('click', function() {
@@ -315,30 +356,6 @@ function renderProductConfigPage() {
             });
             this.classList.add('active');
         });
-    });
-
-    minusButton.addEventListener('click', function() {
-        if (quantity > 1) {
-            quantity -= 1;
-            renderQuantity();
-        }
-    });
-
-    plusButton.addEventListener('click', function() {
-        quantity += 1;
-        renderQuantity();
-    });
-
-    let addButton = document.getElementById('add-configured-product');
-    addButton.addEventListener('click', function() {
-        addToCart(
-            product.id,
-            product.name,
-            product.price,
-            product.img,
-            quantity
-        );
-        showToast('Item added to cart.');
     });
 
     let wishlistBtn = document.getElementById('config-wishlist-btn');
@@ -566,6 +583,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if (minusButton) {
             e.preventDefault();
             subtractQuantity(minusButton.dataset.id);
+        }
+
+        let cartRemoveBtn = e.target.closest('.cart-remove-btn');
+        if (cartRemoveBtn) {
+            e.preventDefault();
+            let id = cartRemoveBtn.dataset.id;
+            let cart = loadCart().filter(ci => (ci.key || ci.id) !== id);
+            saveCart(cart);
+            displayCart();
+            showToast('Item removed from cart.');
         }
 
         let removeWishlistButton = e.target.closest('.wishlist-remove-btn');
