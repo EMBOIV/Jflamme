@@ -518,6 +518,14 @@ function renderCheckoutPage() {
     }
 }
 
+window.addEventListener('pageshow', function(e) {
+    if (e.persisted) {
+        syncWishlistButtons();
+        updateWishlistCount();
+        updateCartCount();
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     let menuToggler = document.getElementById('toggler');
     if (menuToggler) {
