@@ -178,7 +178,7 @@ function displayCart() {
     cartContainer.innerHTML = '';
 
     if (cart.length === 0) {
-        cartContainer.innerHTML = '<p>Your cart is currently empty. <a href="products.html">Shop now</a> to add your bouquet!</p>';
+        cartContainer.innerHTML = '<p>Your cart is currently empty. <a href="products">Shop now</a> to add your bouquet!</p>';
         return;
     }
 
@@ -209,7 +209,7 @@ function displayCart() {
     cartContainer.appendChild(totalDiv);
 
     let checkoutBtn = document.createElement('a');
-    checkoutBtn.href = 'checkout.html';
+    checkoutBtn.href = 'checkout';
     checkoutBtn.className = 'btn checkout-btn';
     checkoutBtn.innerHTML = '<i class="fas fa-lock"></i> Proceed to Checkout';
     cartContainer.appendChild(checkoutBtn);
@@ -225,7 +225,7 @@ function renderProductConfigPage() {
     let product = PRODUCT_CATALOG[productId];
 
     if (!product) {
-        container.innerHTML = '<p>Product not found. <a href="products.html">Back to products</a></p>';
+        container.innerHTML = '<p>Product not found. <a href="products">Back to products</a></p>';
         return;
     }
 
@@ -422,7 +422,7 @@ function displayWishlist() {
     wishlistContainer.innerHTML = '';
 
     if (wishlist.length === 0) {
-        wishlistContainer.innerHTML = '<p>Your wishlist is currently empty. <a href="products.html">Browse products</a> to add favorites.</p>';
+        wishlistContainer.innerHTML = '<p>Your wishlist is currently empty. <a href="products">Browse products</a> to add favorites.</p>';
         return;
     }
 
@@ -465,7 +465,7 @@ function renderCheckoutPage() {
     if (!summaryDiv || !orderField) return;
 
     if (cart.length === 0) {
-        summaryDiv.innerHTML = '<h2>Order Summary</h2><p>Your cart is empty. <a href="products.html">Shop now</a></p>';
+        summaryDiv.innerHTML = '<h2>Order Summary</h2><p>Your cart is empty. <a href="products">Shop now</a></p>';
         if (form) {
             form.querySelector('.checkout-submit-btn').disabled = true;
         }
@@ -531,7 +531,7 @@ function renderCheckoutPage() {
             }).then(function() {
                 localStorage.removeItem('cart');
                 updateCartCount();
-                window.location.href = 'thankyou.html';
+                window.location.href = 'thankyou';
             }).catch(function() {
                 alert('There was an error submitting your order. Please try again.');
             });
@@ -594,7 +594,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         if (category && !categoryMap[category]) {
-            window.history.replaceState({}, '', 'products.html');
+            window.history.replaceState({}, '', 'products');
         }
     }
 
