@@ -273,6 +273,9 @@ function renderProductConfigPage() {
         <div class="product-config-card">
             <div class="product-config-media">
                 <img id="product-main-image" src="${galleryImages[0]}" alt="${product.name}">
+                <button id="config-wishlist-btn" class="config-wishlist-btn" type="button" aria-label="Add to wishlist">
+                    <i class="${isInWishlist(product.id) ? 'fas' : 'far'} fa-heart"></i>
+                </button>
                 <div class="product-thumb-strip">${thumbnailMarkup}</div>
             </div>
             <div class="product-config-form">
@@ -337,6 +340,26 @@ function renderProductConfigPage() {
         );
         showToast('Item added to cart.');
     });
+
+    let wishlistBtn = document.getElementById('config-wishlist-btn');
+    if (wishlistBtn) {
+        if (isInWishlist(product.id)) {
+            wishlistBtn.classList.add('active');
+        }
+        wishlistBtn.addEventListener('click', function() {
+            let added = toggleWishlist({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                img: product.img
+            });
+            this.classList.toggle('active', added);
+            let icon = this.querySelector('i');
+            icon.classList.toggle('fas', added);
+            icon.classList.toggle('far', !added);
+            showToast(added ? 'Added to wishlist.' : 'Removed from wishlist.');
+        });
+    }
 }
 
 function isInWishlist(id) {
