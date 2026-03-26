@@ -208,27 +208,11 @@ function displayCart() {
     totalDiv.innerHTML = `<h3>Total: EGP ${total.toFixed(2)}</h3>`;
     cartContainer.appendChild(totalDiv);
 
-    let whatsappBtn = document.createElement('a');
-    let whatsappMessage = `Hello! I'd like to order:\n`;
-    cart.forEach(item => {
-        whatsappMessage += `${item.name} - Quantity: ${item.quantity} - EGP ${item.price.toFixed(2)} each\n`;
-    });
-    whatsappMessage += `Total: EGP ${total.toFixed(2)}\nThank you!`;
-
-    let whatsappNumber = '201010294098';
-    let whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-    whatsappBtn.href = whatsappLink;
-    whatsappBtn.className = 'btn whatsapp-btn';
-    whatsappBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Send order';
-    whatsappBtn.target = '_blank';
-    whatsappBtn.rel = 'noopener noreferrer';
-    whatsappBtn.addEventListener('click', function() {
-        localStorage.removeItem('cart');
-        updateCartCount();
-        displayCart();
-        showToast('Order sent! Cart cleared.');
-    });
-    cartContainer.appendChild(whatsappBtn);
+    let checkoutBtn = document.createElement('a');
+    checkoutBtn.href = 'checkout.html';
+    checkoutBtn.className = 'btn checkout-btn';
+    checkoutBtn.innerHTML = '<i class="fas fa-lock"></i> Proceed to Checkout';
+    cartContainer.appendChild(checkoutBtn);
 }
 
 function renderProductConfigPage() {
@@ -472,6 +456,68 @@ function showToast(message) {
     }, 2500);
 }
 
+function renderCheckoutPage() {
+    let cart = loadCart();
+    let summaryDiv = document.getElementById('checkout-summary');
+    let orderField = document.getElementById('order_summary');
+    let form = document.getElementById('checkout-form');
+
+    if (!summaryDiv || !orderField) return;
+
+    if (cart.length === 0) {
+        summaryDiv.innerHTML = '<h2>Order Summary</h2><p>Your cart is empty. <a href="products.html">Shop now</a></p>';
+        if (form) {
+            form.querySelector('.checkout-submit-btn').disabled = true;
+        }
+        return;
+    }
+
+    let total = 0;
+    let summaryHTML = '<h2>Order Summary</h2><div class="checkout-items">';
+    let orderText = '';
+
+    cart.forEach(function(item) {
+        let lineTotal = item.price * item.quantity;
+        total += lineTotal;
+        summaryHTML += `
+            <div class="checkout-item">
+                <img src="${item.img}" alt="${item.name}">
+                <div class="checkout-item-info">
+                    <h3>${item.name}</h3>
+                    <p>Qty: ${item.quantity} &times; EGP ${item.price.toFixed(2)}</p>
+                </div>
+                <span class="checkout-item-total">EGP ${lineTotal.toFixed(2)}</span>
+            </div>
+        `;
+        orderText += `Product: ${item.name}\nQty: ${item.quantity}\nPrice: EGP ${lineTotal.toFixed(2)}\n\n`;
+    });
+
+    summaryHTML += '</div>';
+    summaryHTML += `<div class="checkout-total"><h3>Total: EGP ${total.toFixed(2)}</h3></div>`;
+    orderText += `Total: EGP ${total.toFixed(2)}`;
+
+    summaryDiv.innerHTML = summaryHTML;
+    orderField.value = orderText;
+
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let formData = new FormData(form);
+            fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(formData).toString()
+            }).then(function() {
+                localStorage.removeItem('cart');
+                updateCartCount();
+                window.location.href = 'thankyou.html';
+            }).catch(function() {
+                alert('There was an error submitting your order. Please try again.');
+            });
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     let menuToggler = document.getElementById('toggler');
     if (menuToggler) {
@@ -525,6 +571,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (document.querySelector('.product-config')) {
         renderProductConfigPage();
+    }
+
+    if (document.querySelector('.checkout')) {
+        renderCheckoutPage();
+    }
+
+    if (document.querySelector('.thankyou')) {
+        localStorage.removeItem('cart');
+        updateCartCount();
     }
 
     if (!document.querySelector('.toast')) {

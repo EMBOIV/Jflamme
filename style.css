@@ -670,31 +670,20 @@ section {
     color: #333;
 }
 
-.whatsapp-btn {
+.checkout-btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.8rem;
     margin-top: 2rem;
-    padding: 1rem 2rem;
-    background: #25d366;
-    color: #fff !important;
+    width: 100%;
+    padding: 1.4rem 2rem;
     text-decoration: none;
-    border-radius: 0.5rem;
     font-size: 1.5rem;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(37, 211, 102, 0.3);
-}
-
-.whatsapp-btn i {
-    font-size: 1.8rem;
-}
-
-.whatsapp-btn:hover {
-    background: #128c7e;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
     color: #fff !important;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(37, 211, 102, 0.4);
 }
 
 .toast {
@@ -2155,4 +2144,234 @@ header .fa-bars {
     }
 }
 
+/* Checkout page */
+.checkout {
+    padding: 12rem 2rem 4rem;
+    min-height: 80vh;
+}
+
+.checkout-card {
+    max-width: 64rem;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid var(--rose-200);
+    border-radius: 1.6rem;
+    box-shadow: 0 10px 40px rgba(141, 109, 86, 0.1);
+    overflow: hidden;
+}
+
+.checkout-summary {
+    padding: 2.4rem 3rem;
+    background: var(--rose-50);
+    border-bottom: 1px solid var(--rose-200);
+}
+
+.checkout-summary h2,
+.checkout-form h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: var(--text-900);
+    margin-bottom: 1.6rem;
+}
+
+.checkout-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.checkout-item {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(232, 222, 210, 0.6);
+}
+
+.checkout-item:last-child {
+    border-bottom: none;
+}
+
+.checkout-item img {
+    width: 6rem;
+    height: 6rem;
+    object-fit: cover;
+    border-radius: 0.8rem;
+}
+
+.checkout-item-info h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-900);
+}
+
+.checkout-item-info p {
+    font-size: 1.3rem;
+    color: var(--text-700);
+    margin-top: 0.3rem;
+}
+
+.checkout-item-total {
+    margin-left: auto;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--rose-700);
+    white-space: nowrap;
+}
+
+.checkout-total {
+    padding-top: 1.4rem;
+    text-align: right;
+}
+
+.checkout-total h3 {
+    font-size: 1.8rem;
+    color: var(--text-900);
+}
+
+.checkout-form {
+    padding: 2.4rem 3rem 3rem;
+}
+
+.checkout-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.4rem;
+}
+
+.checkout-field {
+    margin-bottom: 1.4rem;
+}
+
+.checkout-field label {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-700);
+    margin-bottom: 0.5rem;
+}
+
+.checkout-field input {
+    width: 100%;
+    padding: 1.2rem 1.4rem;
+    border: 1px solid var(--rose-200);
+    border-radius: 0.9rem;
+    font-size: 1.4rem;
+    color: var(--text-900);
+    background: #fff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.checkout-field input:focus {
+    outline: none;
+    border-color: var(--rose-500);
+    box-shadow: 0 0 0 3px rgba(201, 164, 108, 0.15);
+}
+
+.checkout-submit-btn {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 1.4rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    color: #fff;
+}
+
+.checkout-submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Thank you page */
+.thankyou {
+    padding: 14rem 2rem 6rem;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.thankyou-card {
+    text-align: center;
+    max-width: 50rem;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid var(--rose-200);
+    border-radius: 1.6rem;
+    padding: 4rem 3rem;
+    box-shadow: 0 10px 40px rgba(141, 109, 86, 0.1);
+}
+
+.thankyou-icon {
+    font-size: 5rem;
+    color: var(--rose-500);
+    margin-bottom: 1.6rem;
+}
+
+.thankyou-card h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: var(--text-900);
+    margin-bottom: 1.2rem;
+    background: none;
+    padding: 0;
+}
+
+.thankyou-card p {
+    font-size: 1.5rem;
+    color: var(--text-700);
+    line-height: 1.7;
+    margin-bottom: 2.4rem;
+}
+
+.thankyou-card .btn {
+    display: inline-flex;
+    padding: 1.2rem 3rem;
+    font-size: 1.4rem;
+    text-decoration: none;
+    color: #fff !important;
+}
+
+@media(max-width: 768px) {
+    .checkout {
+        padding: 10rem 1rem 3rem;
+    }
+
+    .checkout-summary,
+    .checkout-form {
+        padding: 2rem 1.8rem;
+    }
+
+    .checkout-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .checkout-item img {
+        width: 5rem;
+        height: 5rem;
+    }
+
+    .thankyou {
+        padding: 10rem 1rem 4rem;
+    }
+
+    .thankyou-card {
+        padding: 3rem 2rem;
+    }
+
+    .thankyou-card h1 {
+        font-size: 2.4rem;
+    }
+}
 

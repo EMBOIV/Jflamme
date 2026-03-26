@@ -7,35 +7,34 @@
     <meta name="color-scheme" content="light">
     <meta name="theme-color" content="#f7f3ef">
 
-    <title>Shopping Cart - J Flamme</title>
+    <title>Checkout - J Flamme</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-    
+
     <script src="script.js" defer></script>
 </head>
-    <body>
-<!-- header start -->
+<body>
 
 <header>
 
 <input type="checkbox" name="" id="toggler">
 <label for="toggler" class="fas fa-bars"></label>
 
-    <a href="index.html" class="logo">J <span>Flamme</span> </a>
-     <nav class="navbar">
+    <a href="index.html" class="logo">J <span>Flamme</span></a>
+    <nav class="navbar">
       <label for="toggler" class="menu-close"><i class="fas fa-arrow-left"></i> Back</label>
-     <a href="index.html#home">Home</a>
-     <a href="index.html#about">About</a>
-     <a href="products.html">Products</a>
-    <a href="index.html#footer-contact">Contact</a>
-    <div class="nav-social">
-        <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" aria-label="Facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://www.tiktok.com/" target="_blank" rel="noreferrer" aria-label="TikTok" title="TikTok"><i class="fab fa-tiktok"></i></a>
-    </div>
+      <a href="index.html#home">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="products.html">Products</a>
+      <a href="index.html#footer-contact">Contact us</a>
+      <div class="nav-social">
+          <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" aria-label="Facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/" target="_blank" rel="noreferrer" aria-label="TikTok" title="TikTok"><i class="fab fa-tiktok"></i></a>
+      </div>
     </nav>
     <label for="toggler" class="menu-overlay"></label>
     <div class="icons header-icons">
@@ -49,29 +48,55 @@
         </span>
     </div>
 </header>
-<!-- header end -->
 
-<!-- cart start -->
-<section class="cart" id="cart">
-    <h1 class="heading">Your <span>Bloom Cart</span></h1>
-    <div class="cart-container">
-        <p>Your cart is currently empty. <a href="products.html">Shop now</a> to add your bouquet!</p>
-        <!-- Example cart item (uncomment and customize when adding items)
-        <div class="cart-item">
-            <img src="images/product1.jpg" alt="Product">
-            <div class="item-details">
-                <h3>Product Name</h3>
-                <p>Price: EGP 10.00</p>
-                <p>Quantity: 1</p>
-            </div>
-            <a href="#" class="remove-btn">Remove</a>
+<section class="checkout" id="checkout">
+    <h1 class="heading">Secure <span>Checkout</span></h1>
+    <div class="checkout-card">
+        <div class="checkout-summary" id="checkout-summary">
+            <h2>Order Summary</h2>
+            <p>Loading your cart...</p>
         </div>
-        -->
+
+        <form name="order" method="POST" data-netlify="true" id="checkout-form" class="checkout-form">
+
+            <input type="hidden" name="form-name" value="order">
+
+            <h2>Shipping Details</h2>
+
+            <div class="checkout-row">
+                <div class="checkout-field">
+                    <label for="first_name">First Name</label>
+                    <input type="text" id="first_name" name="first_name" placeholder="First Name" required>
+                </div>
+                <div class="checkout-field">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" id="last_name" name="last_name" placeholder="Last Name" required>
+                </div>
+            </div>
+
+            <div class="checkout-field">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" placeholder="Full Address" required>
+            </div>
+
+            <div class="checkout-row">
+                <div class="checkout-field">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" placeholder="City" required>
+                </div>
+                <div class="checkout-field">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+                </div>
+            </div>
+
+            <textarea name="order_summary" id="order_summary" hidden></textarea>
+
+            <button type="submit" class="btn checkout-submit-btn"><i class="fas fa-lock"></i> Place Order</button>
+        </form>
     </div>
 </section>
-<!-- cart end -->
 
-<!-- footer start -->
 <footer class="footer">
     <div class="footer-top">
         <div class="footer-brand">
@@ -84,8 +109,6 @@
             <a href="index.html#home">Home</a>
             <a href="index.html#about">About</a>
             <a href="products.html">Products</a>
-            <a href="index.html#reviews">Reviews</a>
-            <a href="index.html#footer-contact">Contact</a>
         </div>
 
         <div class="footer-links">
@@ -112,10 +135,9 @@
     </div>
 
     <div class="footer-bottom">
-        <p>© 2026 J Flamme. All rights reserved.</p>
+        <p>&copy; 2026 J Flamme. All rights reserved.</p>
     </div>
 </footer>
-<!-- footer end -->
 
 </body>
-</html></content>
+</html>
