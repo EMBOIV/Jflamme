@@ -757,6 +757,9 @@ function renderProductConfigPage() {
 
             <p id="reviews-status" class="reviews-status" hidden></p>
             <div id="reviews-list" class="reviews-list"></div>
+            <div class="reviews-more">
+                <button id="reviews-load-more" class="reviews-load-more-btn" type="button" hidden>+5 more</button>
+            </div>
 
             <div id="review-modal" class="review-modal" hidden>
                 <div class="review-modal-backdrop" data-close-review-modal="true"></div>
@@ -812,6 +815,7 @@ function renderProductConfigPage() {
     let cartWrapper = document.getElementById('dynamic-cart-wrapper');
     let productMediaRatingLink = document.getElementById('product-name-rating');
     let reviewsList = document.getElementById('reviews-list');
+    let reviewsLoadMoreBtn = document.getElementById('reviews-load-more');
     let reviewsStatus = document.getElementById('reviews-status');
     let openReviewModalBtn = document.getElementById('open-review-modal');
     let reviewModal = document.getElementById('review-modal');
@@ -826,13 +830,16 @@ function renderProductConfigPage() {
     let reviewRatingText = document.getElementById('review-rating-text');
     let reviewRatingStars = Array.from(document.querySelectorAll('.review-rating-star'));
     let reviewsConfig = getReviewsConfig();
+    let reviewsBatchSize = Math.max(1, Number(reviewsConfig.pageSize) || 5);
     let reviewsState = {
         items: [],
         summary: {
             product_id: product.id,
             review_count: 0,
             average_rating: 0
-        }
+        },
+        hasMore: false,
+        isLoadingMore: false
     };
 
     function setReviewsStatus(message, variant) {
@@ -873,6 +880,31 @@ function renderProductConfigPage() {
                 reviewsList.innerHTML = reviewsState.items.map(renderReviewCard).join('');
             }
         }
+
+        syncLoadMoreButton();
+    }
+
+    function updateHasMoreReviews() {
+        var totalReviews = Number(reviewsState.summary.review_count) || 0;
+        reviewsState.hasMore = reviewsState.items.length < totalReviews;
+    }
+
+    function getRemainingReviewsCount() {
+        var totalReviews = Number(reviewsState.summary.review_count) || 0;
+        var remaining = totalReviews - reviewsState.items.length;
+        if (remaining < 0) return 0;
+        return remaining;
+    }
+
+    function syncLoadMoreButton() {
+        if (!reviewsLoadMoreBtn) return;
+        var remaining = getRemainingReviewsCount();
+        var nextChunk = Math.min(reviewsBatchSize, remaining);
+        reviewsLoadMoreBtn.hidden = !reviewsState.hasMore;
+        reviewsLoadMoreBtn.disabled = reviewsState.isLoadingMore;
+        reviewsLoadMoreBtn.textContent = reviewsState.isLoadingMore
+            ? 'Loading...'
+            : ('+' + nextChunk + ' more');
     }
 
     function openReviewModal() {
@@ -941,7 +973,7 @@ function renderProductConfigPage() {
     function saveInitialReviewCache() {
         saveReviewsCache(product.id, {
             summary: reviewsState.summary,
-            reviews: reviewsState.items.slice(0, reviewsConfig.pageSize)
+            reviews: reviewsState.items.slice()
         });
     }
 
@@ -950,9 +982,73 @@ function renderProductConfigPage() {
         if (Date.now() - cacheEntry.timestamp > reviewsConfig.cacheTTLms) return false;
         reviewsState.summary = cacheEntry.data.summary || reviewsState.summary;
         reviewsState.items = Array.isArray(cacheEntry.data.reviews) ? cacheEntry.data.reviews : [];
+        updateHasMoreReviews();
         renderReviewsState();
         setReviewsStatus('', '');
         return true;
+    }
+
+    function refreshReviewsFromServer(showLoadingState) {
+        if (showLoadingState) {
+            setReviewsStatus('Loading reviews...', '');
+        }
+
+        return Promise.all([
+            fetchReviewSummary(product.id),
+            fetchReviewPage(product.id, reviewsBatchSize, 0)
+        ]).then(function(results) {
+            reviewsState.summary = results[0];
+            reviewsState.items = results[1] || [];
+            updateHasMoreReviews();
+            renderReviewsState();
+            setReviewsStatus('', '');
+            saveInitialReviewCache();
+        });
+    }
+
+    function loadMoreReviews() {
+        if (!reviewsEnabled() || reviewsState.isLoadingMore || !reviewsState.hasMore) {
+            return;
+        }
+
+        reviewsState.isLoadingMore = true;
+        syncLoadMoreButton();
+
+        fetchReviewPage(product.id, reviewsBatchSize, reviewsState.items.length).then(function(nextReviews) {
+            var rows = Array.isArray(nextReviews) ? nextReviews : [];
+            if (rows.length === 0) {
+                reviewsState.hasMore = false;
+                return;
+            }
+
+            var existing = {};
+            reviewsState.items.forEach(function(review) {
+                if (review && review.id !== undefined && review.id !== null) {
+                    existing[String(review.id)] = true;
+                }
+            });
+
+            rows.forEach(function(review) {
+                var reviewId = review && review.id !== undefined && review.id !== null
+                    ? String(review.id)
+                    : '';
+                if (!reviewId || !existing[reviewId]) {
+                    reviewsState.items.push(review);
+                    if (reviewId) {
+                        existing[reviewId] = true;
+                    }
+                }
+            });
+
+            updateHasMoreReviews();
+            renderReviewsState();
+            saveInitialReviewCache();
+        }).catch(function() {
+            setReviewsStatus('Could not load more reviews right now.', 'error');
+        }).finally(function() {
+            reviewsState.isLoadingMore = false;
+            syncLoadMoreButton();
+        });
     }
 
     function loadInitialReviews() {
@@ -967,22 +1063,9 @@ function renderProductConfigPage() {
         }
 
         var cached = loadReviewsCache(product.id);
-        if (hydrateFromCache(cached)) {
-            return;
-        }
+        var hasValidCache = hydrateFromCache(cached);
 
-        setReviewsStatus('Loading reviews...', '');
-
-        Promise.all([
-            fetchReviewSummary(product.id),
-            fetchReviewPage(product.id, reviewsConfig.pageSize, 0)
-        ]).then(function(results) {
-            reviewsState.summary = results[0];
-            reviewsState.items = results[1] || [];
-            renderReviewsState();
-            setReviewsStatus('', '');
-            saveInitialReviewCache();
-        }).catch(function() {
+        refreshReviewsFromServer(!hasValidCache).catch(function() {
             setReviewsStatus('Could not load reviews right now.', 'error');
         });
     }
@@ -1120,6 +1203,10 @@ function renderProductConfigPage() {
         });
     }
 
+    if (reviewsLoadMoreBtn) {
+        reviewsLoadMoreBtn.addEventListener('click', loadMoreReviews);
+    }
+
     reviewRatingStars.forEach(function(button) {
         button.addEventListener('click', function() {
             setReviewRating(button.getAttribute('data-rating'));
@@ -1187,13 +1274,15 @@ function renderProductConfigPage() {
                     var currentAverage = Number(reviewsState.summary.average_rating) || 0;
                     var nextCount = currentCount + 1;
                     var nextAverage = ((currentAverage * currentCount) + payload.rating) / nextCount;
+                    var visibleCount = Math.max(reviewsState.items.length, reviewsBatchSize);
 
                     reviewsState.summary = {
                         product_id: product.id,
                         review_count: nextCount,
                         average_rating: Math.round(nextAverage * 10) / 10
                     };
-                    reviewsState.items = [insertedReview].concat(reviewsState.items).slice(0, reviewsConfig.pageSize);
+                    reviewsState.items = [insertedReview].concat(reviewsState.items).slice(0, visibleCount);
+                    updateHasMoreReviews();
                     renderReviewsState();
                     saveInitialReviewCache();
                 }

@@ -2113,6 +2113,34 @@ body.product-image-modal-open {
     margin-top: 1.4rem;
 }
 
+.reviews-more {
+    margin-top: 1.4rem;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.reviews-load-more-btn {
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--rose-700);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+    cursor: pointer;
+}
+
+.reviews-load-more-btn:hover {
+    color: var(--rose-900);
+}
+
+.reviews-load-more-btn:disabled {
+    opacity: 0.65;
+    cursor: default;
+}
+
 .review-card {
     border: 1px solid rgba(232, 222, 210, 0.9);
     border-radius: 1.4rem;
