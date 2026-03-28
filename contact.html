@@ -7,7 +7,7 @@
     <meta name="color-scheme" content="light">
     <meta name="theme-color" content="#f7f3ef">
 
-    <title>Checkout - J Flamme</title>
+    <title>Contact Us - J Flamme</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,67 +50,53 @@
     </div>
 </header>
 
-<section class="checkout" id="checkout">
-    <h1 class="heading">Secure <span>Checkout</span></h1>
-    <div class="checkout-card">
-        <div class="checkout-summary" id="checkout-summary">
-            <h2>Order Summary</h2>
-            <p>Loading your cart...</p>
+<section class="contact-page" id="contact">
+    <h1 class="heading">Contact <span>Us</span></h1>
+    <div class="contact-card">
+
+        <form name="contact" method="POST" netlify id="contact-form" class="contact-form">
+            <input type="hidden" name="form-name" value="contact">
+
+            <h2>Send Us a Message</h2>
+
+            <div class="checkout-row">
+                <div class="checkout-field">
+                    <label for="contact_first_name">First Name <span class="required-star">*</span></label>
+                    <input type="text" id="contact_first_name" name="first_name" placeholder="First Name" required>
+                </div>
+                <div class="checkout-field">
+                    <label for="contact_last_name">Last Name <span class="required-star">*</span></label>
+                    <input type="text" id="contact_last_name" name="last_name" placeholder="Last Name" required>
+                </div>
+            </div>
+
+            <div class="checkout-field">
+                <label for="contact_email">Email <span class="required-star">*</span></label>
+                <input type="email" id="contact_email" name="email" placeholder="your@email.com" required>
+            </div>
+
+            <div class="checkout-field">
+                <label for="contact_phone">Phone <span class="optional-label">(Optional)</span></label>
+                <input type="tel" id="contact_phone" name="phone" placeholder="Phone Number" inputmode="tel">
+            </div>
+
+            <div class="checkout-field">
+                <label for="contact_message">Message <span class="required-star">*</span></label>
+                <textarea id="contact_message" name="message" placeholder="Write your message here..." rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="btn contact-submit-btn"><i class="fas fa-paper-plane"></i> Send Message</button>
+
+            <p id="contact-success" class="contact-success-msg" style="display:none;"><i class="fas fa-check-circle"></i> Thank you! Your message has been sent. We'll be in touch soon.</p>
+        </form>
+
+        <div class="contact-whatsapp">
+            <span class="contact-whatsapp-divider">or</span>
+            <a href="https://wa.me/201234513365" target="_blank" rel="noreferrer" class="btn whatsapp-btn">
+                <i class="fab fa-whatsapp"></i> Message Us on WhatsApp
+            </a>
         </div>
 
-        <form name="order" method="POST" netlify id="checkout-form" class="checkout-form">
-
-            <input type="hidden" name="form-name" value="order">
-
-            <h2>Shipping Details</h2>
-
-            <div class="checkout-row">
-                <div class="checkout-field">
-                    <label for="first_name">First Name <span class="required-star">*</span></label>
-                    <input type="text" id="first_name" name="first_name" placeholder="First Name" required>
-                </div>
-                <div class="checkout-field">
-                    <label for="last_name">Last Name <span class="required-star">*</span></label>
-                    <input type="text" id="last_name" name="last_name" placeholder="Last Name" required>
-                </div>
-            </div>
-
-            <div class="checkout-field">
-                <label for="address">Address <span class="required-star">*</span></label>
-                <input type="text" id="address" name="address" placeholder="Street address" required>
-            </div>
-
-            <div class="checkout-field">
-                <label for="apartment">Apartment / Suite / Floor <span class="optional-label">(Optional)</span></label>
-                <input type="text" id="apartment" name="apartment" placeholder="Apt, suite, floor">
-            </div>
-
-            <div class="checkout-row">
-                <div class="checkout-field">
-                    <label for="city">City <span class="required-star">*</span></label>
-                    <input type="text" id="city" name="city" placeholder="City" required>
-                </div>
-                <div class="checkout-field">
-                    <label for="phone">Phone <span class="required-star">*</span></label>
-                    <input type="tel" id="phone" name="phone" placeholder="Phone Number" required pattern="[0-9+]+" inputmode="tel">
-                </div>
-            </div>
-
-            <div class="checkout-payment-section">
-                <h2>Payment Method</h2>
-                <label class="checkout-payment-option" for="payment_cod">
-                    <input type="radio" id="payment_cod" name="payment_method" value="Cash on Delivery" checked>
-                    <span class="checkout-payment-content">
-                        <span class="checkout-payment-title">Cash on Delivery</span>
-                        <span class="checkout-payment-text">Pay in cash when your order arrives.</span>
-                    </span>
-                </label>
-            </div>
-
-            <textarea name="order_summary" id="order_summary" hidden></textarea>
-
-            <button type="submit" class="btn checkout-submit-btn"><i class="fas fa-paper-plane"></i> Place Order</button>
-        </form>
     </div>
 </section>
 
@@ -126,6 +112,7 @@
             <a href="/#home">Home</a>
             <a href="/#about">About</a>
             <a href="products">Products</a>
+            <a href="contact.html">Contact Us</a>
         </div>
 
         <div class="footer-links">
@@ -156,6 +143,35 @@
         <p>&copy; 2026 J Flamme. All rights reserved.</p>
     </div>
 </footer>
+
+<script>
+    (function() {
+        var form = document.getElementById('contact-form');
+        if (!form) return;
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            var formData = new FormData(form);
+            fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(formData).toString()
+            }).then(function() {
+                form.reset();
+                var successMsg = document.getElementById('contact-success');
+                if (successMsg) {
+                    successMsg.style.display = 'block';
+                    window.scrollTo({ top: successMsg.offsetTop - 100, behavior: 'smooth' });
+                }
+            }).catch(function() {
+                alert('There was an error sending your message. Please try again.');
+            });
+        });
+    })();
+</script>
 
 </body>
 </html>

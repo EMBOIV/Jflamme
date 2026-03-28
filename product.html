@@ -14,6 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     
+    <script src="reviews-config.js" defer></script>
     <script src="script.js" defer></script>
 </head>
 <body>
@@ -29,7 +30,7 @@
       <a href="/#home">Home</a>
       <a href="/#about">About</a>
     <a href="products">Products</a>
-            <a href="/#footer-contact">Contact us</a>
+            <a href="contact.html">Contact us</a>
     <div class="nav-social">
         <a href="https://www.instagram.com/j_flammee" target="_blank" rel="noreferrer" aria-label="Instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
         <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" aria-label="Facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -51,11 +52,19 @@
 </header>
 
 <section class="product-config" id="product-config">
-    <h1 id="product-page-title" class="heading">Product <span>Details</span></h1>
     <div class="product-config-container">
         <p>Loading product options...</p>
     </div>
 </section>
+
+<form name="product-review-email" netlify hidden>
+    <input type="text" name="product_id">
+    <input type="text" name="product_name">
+    <input type="text" name="reviewer_name">
+    <input type="text" name="reviewer_phone">
+    <input type="text" name="rating">
+    <textarea name="comment"></textarea>
+</form>
 
 <footer class="footer">
     <div class="footer-top">

@@ -1,0 +1,7 @@
+id,name,price,oldPrice,img,images,description,category,badge,enabled
+1,Rose Glow Bouquet,15.99,60.00,./images/45.jpg,./images/45.jpg|./images/44.jpg|./images/50.jpg,"A romantic bouquet design with soft floral tones, hand-finished for elegant gifting moments.",bouquets,new,1
+2,Blush Petal Box,15.99,20.00,./images/12.jpg,./images/12.jpg|./images/13.jpg|./images/14.jpg,"A compact premium arrangement styled in a keepsake box with a delicate blush aesthetic.",jars,bestseller,1
+3,Bloom Candle Tray,15.99,20.00,./images/4.jpg,./images/4.jpg|./images/5.jpg|./images/6.jpg,"A tray presentation combining candle artistry and floral detailing for modern home decor.",jars,new,1
+4,Velvet Rose Set,15.99,20.00,./images/102.jpg,./images/102.jpg|./images/101.jpg|./images/105.jpg,"A rich velvet-inspired arrangement with layered petals that feels refined and luxurious.",bouquets,bestseller,1
+5,Romance Bloom Vase,15.99,20.00,./images/100.jpg,./images/100.jpg|./images/99.jpg|./images/88.jpg,"A graceful vase composition designed for anniversaries, celebrations, and heartfelt gifts.",bouquets,new,1
+6,Sweet Peony Bundle,15.99,20.00,./images/99.jpg,./images/99.jpg|./images/88.jpg|./images/77.jpg,"A soft peony-forward bundle with premium wrapping and a timeless romantic style.",jars,bestseller,1

@@ -14,6 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     
+    <script src="reviews-config.js" defer></script>
     <script src="script.js" defer></script>
 </head>
     <body>
@@ -34,7 +35,7 @@
     <a href="/#home" class="nav-link">Home</a>
     <a href="/#about" class="nav-link">About</a>
     <a href="products" class="nav-link">Products</a>
-    <a href="/#footer-contact" class="nav-link">Contact us</a>
+    <a href="contact.html" class="nav-link">Contact us</a>
     <div class="nav-social">
         <a href="https://www.instagram.com/j_flammee" target="_blank" rel="noreferrer" aria-label="Instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
         <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" aria-label="Facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -63,101 +64,11 @@
 <!-- products start -->
 <section class="products luxury-grid" id="products">
     <h1 class="heading">Candle & Flower <span>Collection</span></h1>
-    <div class="products-filter" aria-label="Product category filters">
-        <a class="products-filter-link" data-category="all" href="products">All</a>
-        <a class="products-filter-link" data-category="bouquets" href="products?category=bouquets">Bouquets</a>
-        <a class="products-filter-link" data-category="jars" href="products?category=jars">Jars</a>
+    <div class="products-filter" id="products-filter" aria-label="Product category filters">
+        <a class="products-filter-link active" data-category="all" href="products.html">All</a>
     </div>
     <div class="box-container">
-        <div class="box" data-id="1" data-name="Rose Glow Bouquet" data-price="15.99" data-img="./images/45.jpg" data-category="bouquets" data-detail-url="product?id=1" tabindex="0" role="link" aria-label="View Rose Glow Bouquet details">
-            <span class="product-badge new">New</span>
-            <div class="images">
-                <img src="./images/45.jpg" alt="Rose Glow Bouquet">
-                <button class="wishlist-btn" aria-label="Toggle wishlist for Rose Glow Bouquet"><i class="far fa-heart"></i></button>
-            </div>
-            <div class="content">
-                <h3>Rose Glow Bouquet</h3>
-                <div class="price"><span class="current-price">EGP 15.99</span><span class="old-price">EGP 20.00</span></div>
-            </div>
-            <div class="icons">
-                <a href="product?id=1" class="btn-cart product-view-link">View Details</a>
-            </div>
-        </div>
-
-        <div class="box" data-id="2" data-name="Blush Petal Box" data-price="15.99" data-img="./images/12.jpg" data-category="jars" data-detail-url="product?id=2" tabindex="0" role="link" aria-label="View Blush Petal Box details">
-            <span class="product-badge bestseller">Bestseller</span>
-            <div class="images">
-                <img src="./images/12.jpg" alt="Blush Petal Box">
-                <button class="wishlist-btn" aria-label="Toggle wishlist for Blush Petal Box"><i class="far fa-heart"></i></button>
-            </div>
-            <div class="content">
-                <h3>Blush Petal Box</h3>
-                <div class="price"><span class="current-price">EGP 15.99</span><span class="old-price">EGP 20.00</span></div>
-            </div>
-            <div class="icons">
-                <a href="product?id=2" class="btn-cart product-view-link">View Details</a>
-            </div>
-        </div>
-
-        <div class="box" data-id="3" data-name="Bloom Candle Tray" data-price="15.99" data-img="./images/4.jpg" data-category="jars" data-detail-url="product?id=3" tabindex="0" role="link" aria-label="View Bloom Candle Tray details">
-            <span class="product-badge new">New</span>
-            <div class="images">
-                <img src="./images/4.jpg" alt="Bloom Candle Tray">
-                <button class="wishlist-btn" aria-label="Toggle wishlist for Bloom Candle Tray"><i class="far fa-heart"></i></button>
-            </div>
-            <div class="content">
-                <h3>Bloom Candle Tray</h3>
-                <div class="price"><span class="current-price">EGP 15.99</span><span class="old-price">EGP 20.00</span></div>
-            </div>
-            <div class="icons">
-                <a href="product?id=3" class="btn-cart product-view-link">View Details</a>
-            </div>
-        </div>
-
-        <div class="box" data-id="4" data-name="Velvet Rose Set" data-price="15.99" data-img="./images/102.jpg" data-category="bouquets" data-detail-url="product?id=4" tabindex="0" role="link" aria-label="View Velvet Rose Set details">
-            <span class="product-badge bestseller">Bestseller</span>
-            <div class="images">
-                <img src="./images/102.jpg" alt="Velvet Rose Set">
-                <button class="wishlist-btn" aria-label="Toggle wishlist for Velvet Rose Set"><i class="far fa-heart"></i></button>
-            </div>
-            <div class="content">
-                <h3>Velvet Rose Set</h3>
-                <div class="price"><span class="current-price">EGP 15.99</span><span class="old-price">EGP 20.00</span></div>
-            </div>
-            <div class="icons">
-                <a href="product?id=4" class="btn-cart product-view-link">View Details</a>
-            </div>
-        </div>
-
-        <div class="box" data-id="5" data-name="Romance Bloom Vase" data-price="15.99" data-img="./images/100.jpg" data-category="bouquets" data-detail-url="product?id=5" tabindex="0" role="link" aria-label="View Romance Bloom Vase details">
-            <span class="product-badge new">New</span>
-            <div class="images">
-                <img src="./images/100.jpg" alt="Romance Bloom Vase">
-                <button class="wishlist-btn" aria-label="Toggle wishlist for Romance Bloom Vase"><i class="far fa-heart"></i></button>
-            </div>
-            <div class="content">
-                <h3>Romance Bloom Vase</h3>
-                <div class="price"><span class="current-price">EGP 15.99</span><span class="old-price">EGP 20.00</span></div>
-            </div>
-            <div class="icons">
-                <a href="product?id=5" class="btn-cart product-view-link">View Details</a>
-            </div>
-        </div>
-
-        <div class="box" data-id="6" data-name="Sweet Peony Bundle" data-price="15.99" data-img="./images/99.jpg" data-category="jars" data-detail-url="product?id=6" tabindex="0" role="link" aria-label="View Sweet Peony Bundle details">
-            <span class="product-badge bestseller">Bestseller</span>
-            <div class="images">
-                <img src="./images/99.jpg" alt="Sweet Peony Bundle">
-                <button class="wishlist-btn" aria-label="Toggle wishlist for Sweet Peony Bundle"><i class="far fa-heart"></i></button>
-            </div>
-            <div class="content">
-                <h3>Sweet Peony Bundle</h3>
-                <div class="price"><span class="current-price">EGP 15.99</span><span class="old-price">EGP 20.00</span></div>
-            </div>
-            <div class="icons">
-                <a href="product?id=6" class="btn-cart product-view-link">View Details</a>
-            </div>
-        </div>
+        <p>Loading products...</p>
     </div>
 </section>
 <!-- products end -->
